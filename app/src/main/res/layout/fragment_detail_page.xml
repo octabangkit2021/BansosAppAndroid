@@ -1,14 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".ui.fragment.DetailPageFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!--    HEADER SECTION -->
+    <ImageView
+        android:id="@+id/img_banner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="250dp"
+        android:src="@drawable/bansos_pict"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <!--    END HEADER SECTION -->
 
-</FrameLayout>
+    <!--    CONTENT -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/homepage_background"
+        android:padding="@dimen/padding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_banner">
+
+        <TextView
+            android:id="@+id/tv_title_bansos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Bantuan Uang Tunai"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_title_waktu_bansos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_light"
+            android:text="Berlaku:"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="@id/tv_title_bansos"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_bansos" />
+
+        <TextView
+            android:id="@+id/tv_waktu_bansos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/poppins_light"
+            android:text="Januari 2021 - Maret 2021"
+            android:textSize="10sp"
+            app:layout_constraintStart_toEndOf="@id/tv_title_waktu_bansos"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_bansos" />
+
+        <TextView
+            android:id="@+id/tv_title_total_bansos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Anda akan mendapatkan:"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_waktu_bansos" />
+
+        <TextView
+            android:id="@+id/tv_jenis_bansos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_light"
+            android:text="- Uang Tunai"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tv_title_total_bansos"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_total_bansos" />
+
+        <TextView
+            android:id="@+id/tv_total_bansos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/poppins_light"
+            android:text="Rp. 1.000.000"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/tv_jenis_bansos"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_total_bansos" />
+
+        <TextView
+            android:id="@+id/tv_title_persyaratan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Persyaratan :"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_total_bansos" />
+
+        <TextView
+            android:id="@+id/tv_list_persyaratan1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_light"
+            android:text="- KTP"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tv_title_persyaratan"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_persyaratan" />
+
+        <TextView
+            android:id="@+id/tv_list_persyaratan2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_light"
+            android:text="- KK"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tv_title_persyaratan"
+            app:layout_constraintTop_toBottomOf="@+id/tv_list_persyaratan1" />
+
+        <TextView
+            android:id="@+id/tv_list_persyaratan3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_light"
+            android:text="- SKTM"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tv_title_persyaratan"
+            app:layout_constraintTop_toBottomOf="@+id/tv_list_persyaratan2" />
+
+        <TextView
+            android:id="@+id/tv_list_persyaratan4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_light"
+            android:text="- REKOMENDASI RT"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tv_title_persyaratan"
+            app:layout_constraintTop_toBottomOf="@+id/tv_list_persyaratan3" />
+
+        <TextView
+            android:id="@+id/tv_list_persyaratan5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_light"
+            android:text="- REKOMENDASI RW"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tv_title_persyaratan"
+            app:layout_constraintTop_toBottomOf="@+id/tv_list_persyaratan4" />
+
+        <TextView
+            android:id="@+id/tv_title_ketentuan_bansos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Ketentuan Bansos :"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_list_persyaratan5" />
+
+        <TextView
+            android:id="@+id/tv_ketentuan_bansos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_light"
+            android:padding="@dimen/padding_md"
+            android:text="Penerima hanya dapat mengajukan 1 kali, penerima tidak dapat mengajukan kembali jika sudah berhasil mendapatkan bansos"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tv_title_ketentuan_bansos"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_ketentuan_bansos" />
+
+        <Button
+            android:id="@+id/btn_ajukan_bansos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="center_horizontal"
+            android:text="ajukan Bansos"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_ketentuan_bansos" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--END CONTENT-->
+    
+</androidx.constraintlayout.widget.ConstraintLayout>
