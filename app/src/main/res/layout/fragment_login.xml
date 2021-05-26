@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:padding="@dimen/padding"
-    tools:context=".ui.fragment.SignupFragment">
+    tools:context=".ui.fragment.LoginFragment">
 
     <ImageView
         android:id="@+id/img_icon"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_semibold"
         android:gravity="center_horizontal"
-        android:text="Daftar Bansos virtual"
+        android:text="Login Bansos virtual"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,63 +40,12 @@
         android:background="@drawable/input_text_background"
         android:fontFamily="@font/poppins_medium"
         android:hint="Nomor KTP"
-        android:inputType="number"
-        android:padding="@dimen/padding_md"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/edt_name_ktp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin"
-        android:layout_marginTop="@dimen/margin_md"
-        android:layout_marginEnd="@dimen/margin"
-        android:background="@drawable/input_text_background"
-        android:fontFamily="@font/poppins_medium"
-        android:hint="Nama Sesuai KTP"
         android:inputType="text"
         android:padding="@dimen/padding_md"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_nomor_ktp" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/edt_tanggal_lahir"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin"
-        android:layout_marginTop="@dimen/margin_md"
-        android:layout_marginEnd="@dimen/margin"
-        android:background="@drawable/input_text_background"
-        android:fontFamily="@font/poppins_medium"
-        android:hint="Tanggal Lahir"
-        android:inputType="date"
-        android:padding="@dimen/padding_md"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_name_ktp" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/edt_nomor_phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin"
-        android:layout_marginTop="@dimen/margin_md"
-        android:layout_marginEnd="@dimen/margin"
-        android:background="@drawable/input_text_background"
-        android:fontFamily="@font/poppins_medium"
-        android:hint="Nomor Hp"
-        android:inputType="phone"
-        android:padding="@dimen/padding_md"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_tanggal_lahir" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/edt_password"
@@ -113,37 +62,56 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_nomor_phone" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_nomor_ktp" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/edt_repassword"
-        android:layout_width="match_parent"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_login"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin"
-        android:layout_marginTop="@dimen/margin_md"
-        android:layout_marginEnd="@dimen/margin"
-        android:background="@drawable/input_text_background"
-        android:fontFamily="@font/poppins_medium"
-        android:hint="Re-Password"
-        android:inputType="textPassword"
-        android:padding="@dimen/padding_md"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_password" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_daftar"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin"
+        android:layout_marginTop="24dp"
         android:background="@drawable/button_background"
         android:fontFamily="@font/poppins_semibold"
-        android:text="Daftar"
+        android:padding="@dimen/padding_md"
+        android:text="Login"
         android:textAllCaps="false"
-        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:cornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edt_repassword" />
+        app:layout_constraintTop_toBottomOf="@id/edt_password" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_daftar"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin"
+        android:background="@drawable/button_daftar_background"
+        android:fontFamily="@font/poppins_light"
+        android:padding="@dimen/padding_md"
+        android:text="Daftar"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_login" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/lupa_password"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_md"
+        android:background="@drawable/button_forgot_pass_background"
+        android:fontFamily="@font/poppins_light"
+        android:padding="@dimen/padding_md"
+        android:text="Lupa Password"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_daftar" />
 </androidx.constraintlayout.widget.ConstraintLayout>
