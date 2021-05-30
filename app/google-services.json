@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "418888702445",
+    "project_id": "bansosapp-cb5b8",
+    "storage_bucket": "bansosapp-cb5b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:418888702445:android:9c915ee57e817ac4346fe4",
+        "android_client_info": {
+          "package_name": "com.octatech.bansosapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "418888702445-kicjigg7odgqvlm4j5amevgm4kv9ee3g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4lcJiLQMJcJ93BuTdMFSVb7bThb3KfaU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "418888702445-kicjigg7odgqvlm4j5amevgm4kv9ee3g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
