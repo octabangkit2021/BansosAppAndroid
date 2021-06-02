@@ -48,6 +48,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.firebase:firebase-firestore:23.0.0'
+    implementation 'com.google.firebase:firebase-storage:20.0.0'
+    implementation 'com.google.firebase:firebase-storage-ktx:20.0.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -64,5 +66,10 @@ dependencies {
 
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    implementation 'nl.joery.animatedbottombar:library:1.0.9'
+    implementation 'com.github.Drjacky:ImagePicker:2.1.11'
+    implementation 'com.github.florent37:inline-activity-result-kotlin:1.0.4'
+    implementation "com.github.illiashenkoo:startask-permissions:1.0.6"
+
 
 }

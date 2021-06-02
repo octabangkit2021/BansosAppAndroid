@@ -21,4 +21,8 @@
     <string name="title_ketentuan_bansos">Ketentuan Bansos :</string>
     <string name="ajukan_bansos">ajukan Bansos</string>
     <string name="error_message">Sepertinya ada kesalahan di penyimpanan kami, Silahkan ulangi proses kembali</string>
+    <string name="home">Home</string>
+    <string name="news">News</string>
+    <string name="profile">Profile</string>
+    <string name="maintenancelogo">MaintenanceLogo</string>
 </resources>

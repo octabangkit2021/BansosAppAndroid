@@ -1,5 +1,6 @@
 package com.octatech.bansosapp.ui.detail
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
@@ -7,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.octatech.bansosapp.R
 import com.octatech.bansosapp.core.domain.model.Bansos
 import com.octatech.bansosapp.databinding.ActivityDetailBinding
+import com.octatech.bansosapp.ui.RegisterBansos.RegisterBansosActivity
 
 class DetailActivity : AppCompatActivity() {
 
@@ -26,6 +28,11 @@ class DetailActivity : AppCompatActivity() {
 
         val detailBansos = intent.getParcelableExtra<Bansos>(EXTRA_DATA)
         showDetailbansos(detailBansos)
+        binding.btnAjukanBansos.setOnClickListener {
+            val intent = Intent(this, RegisterBansosActivity::class.java)
+            intent.putExtra(RegisterBansosActivity.EXTRA_DATA, detailBansos)
+            startActivity(intent)
+        }
     }
 
     private fun showDetailbansos(bansos: Bansos?){

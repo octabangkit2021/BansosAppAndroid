@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:text="@string/title_card_bansos"
             android:fontFamily="@font/roboto_bold"
-            android:textSize="16sp"/>
+            android:textSize="18sp"/>
         <TextView
             android:id="@+id/card_list_bansos_desc"
             android:layout_width="match_parent"
