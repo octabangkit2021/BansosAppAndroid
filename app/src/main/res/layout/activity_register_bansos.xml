@@ -8,191 +8,57 @@
     tools:context=".ui.detail.DetailActivity">
 
     <!--    HEADER SECTION -->
+
+
     <ImageView
         android:id="@+id/img_banner"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/imagebansos"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        android:src="@drawable/addphoto"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     <!--    END HEADER SECTION -->
 
     <!--    CONTENT -->
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@drawable/homepage_background"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline3"
-        android:background="@drawable/homepage_background">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline3">
+
+
+        <FrameLayout
+            android:id="@+id/fl_register"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/homepage_background"
-            android:padding="@dimen/padding"
+            android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_banner">
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="Silahkan Isi Form"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/register_et_noktp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="@dimen/margin"
-                android:background="@drawable/input_text_with_border"
-                android:fontFamily="@font/poppins_medium"
-                android:hint="Nomor KTP"
-                android:inputType="number"
-                android:padding="@dimen/padding_md"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/register_et_pekerjaan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="@dimen/margin"
-                android:background="@drawable/input_text_with_border"
-                android:fontFamily="@font/poppins_medium"
-                android:hint="Pekerjaan"
-                android:inputType="number"
-                android:padding="@dimen/padding_md"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/register_et_noktp" />
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/register_et_pendapatan_perbulan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="@dimen/margin"
-                android:background="@drawable/input_text_with_border"
-                android:fontFamily="@font/poppins_medium"
-                android:hint="Pendapatan perbulan"
-                android:inputType="number"
-                android:padding="@dimen/padding_md"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/register_et_pekerjaan" />
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/register_et_tanggungan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="@dimen/margin"
-                android:background="@drawable/input_text_with_border"
-                android:fontFamily="@font/poppins_medium"
-                android:hint="Jumlah Tanggungan"
-                android:inputType="number"
-                android:padding="@dimen/padding_md"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/register_et_pendapatan_perbulan" />
-
-            <ImageView
-                android:id="@+id/iv_foto_ktp"
-                android:layout_width="300dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="32dp"
-                android:src="@drawable/placeholder"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/register_et_tanggungan" />
-
-            <Button
-                android:id="@+id/btn_foto_ktp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/button_background"
-                android:text="Foto KTP"
-                app:layout_constraintEnd_toEndOf="@+id/iv_foto_ktp"
-                app:layout_constraintHorizontal_bias="0.497"
-                app:layout_constraintStart_toStartOf="@+id/iv_foto_ktp"
-                app:layout_constraintTop_toBottomOf="@+id/iv_foto_ktp" />
-
-            <ImageView
-                android:id="@+id/iv_foto_kk"
-                android:layout_width="300dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="32dp"
-                android:src="@drawable/placeholder"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_foto_ktp" />
-
-            <Button
-                android:id="@+id/btn_foto_kk"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/button_background"
-                android:text="Foto KK"
-                app:layout_constraintEnd_toEndOf="@+id/iv_foto_kk"
-                app:layout_constraintHorizontal_bias="0.497"
-                app:layout_constraintStart_toStartOf="@+id/iv_foto_kk"
-                app:layout_constraintTop_toBottomOf="@+id/iv_foto_kk" />
-            <ImageView
-                android:id="@+id/iv_foto_dokumen_pendukung"
-                android:layout_width="300dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="32dp"
-                android:src="@drawable/placeholder"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_foto_kk" />
-
-            <Button
-                android:id="@+id/btn_foto_dokumen_pendukung"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/button_background"
-                android:text="Foto Dokumen Pendukung"
-                app:layout_constraintEnd_toEndOf="@+id/iv_foto_dokumen_pendukung"
-                app:layout_constraintHorizontal_bias="0.497"
-                app:layout_constraintStart_toStartOf="@+id/iv_foto_dokumen_pendukung"
-                app:layout_constraintTop_toBottomOf="@+id/iv_foto_dokumen_pendukung" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </ScrollView>
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1" />
+        app:layout_constraintGuide_percent="0.25" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
 
     <!--END CONTENT-->
 

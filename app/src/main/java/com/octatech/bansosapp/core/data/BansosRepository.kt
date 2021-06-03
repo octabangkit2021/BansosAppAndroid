@@ -1,5 +1,6 @@
 package com.octatech.bansosapp.core.data
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
@@ -52,4 +53,7 @@ class BansosRepository private constructor(
                 localDataSource.insertbansos(bansosList)
             }
         }.asLiveData()
+
+    override fun uploadGambar(fileName: String, uri: Uri) =
+        appExecutors.diskIO().execute { remoteDataSource.uploadPhoto(fileName, uri) }
 }

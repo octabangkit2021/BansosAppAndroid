@@ -1,19 +1,13 @@
 package com.octatech.bansosapp.ui.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import com.octatech.bansosapp.R
-import com.octatech.bansosapp.core.data.Resource
-import com.octatech.bansosapp.core.ui.HomeBansosAdapter
-import com.octatech.bansosapp.core.ui.ViewModelFactory
 import com.octatech.bansosapp.databinding.ActivityHomePageBinding
-import com.octatech.bansosapp.ui.detail.DetailActivity
 import com.octatech.bansosapp.ui.news.NewsFragment
 import com.octatech.bansosapp.ui.profile.ProfileFragment
 import nl.joery.animatedbottombar.AnimatedBottomBar
@@ -22,6 +16,22 @@ import nl.joery.animatedbottombar.AnimatedBottomBar
 class HomePage : AppCompatActivity() {
 
     private lateinit var binding : ActivityHomePageBinding
+    private var mAuth : FirebaseAuth = FirebaseAuth.getInstance()
+
+    override fun onStart() {
+        super.onStart()
+        mAuth.signInAnonymously().addOnCompleteListener{
+            if(it.isComplete){
+                val user = mAuth.currentUser
+                Log.d("LOGIN", "Login As " + user)
+            } else {
+                Log.w("LOGIN", "signInWithCustomToken:failure", it.getException());
+                Toast.makeText(this, "Authentication failed.",
+                    Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_page)

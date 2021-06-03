@@ -30,12 +30,16 @@ class RemoteDataSource() {
     }
 
     fun uploadPhoto(fileName : String, file : Uri ){
-        var storageReference = FirebaseStorage.getInstance().getReference("/$fileName")
-
+        var storageReference = FirebaseStorage.getInstance().getReference("$fileName")
+        var result : Uri
         storageReference.putFile(file).addOnSuccessListener {
-            ApiResponse.Success(it)
+            storageReference.downloadUrl.addOnSuccessListener {
+                    var uri : Uri = it
+                    result = uri;
+
+            }
         }.addOnFailureListener{
-        ApiResponse.Empty
+
         }
     }
 }
