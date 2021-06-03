@@ -3,8 +3,9 @@
     package="com.octatech.bansosapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:fullBackupContent="true"
@@ -13,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BansosApp">
-        <activity android:name=".ui.RegisterBansos.RegisterBansosActivity"></activity>
+        <activity android:name=".ui.admin.HomeAdmin"></activity>
+        <activity android:name=".ui.RegisterBansos.RegisterBansosActivity" />
         <activity android:name=".ui.detail.DetailActivity" />
         <activity android:name=".ui.home.HomePage">
             <intent-filter>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".ui.admin.HomeAdminFragment">
+
+    <!--    HEADER SECTION-->
+
+    <TextView
+        android:id="@+id/tv_note_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_light"
+        android:text="@string/dummy_note"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintStart_toStartOf="@+id/tv_header_username"
+        app:layout_constraintTop_toBottomOf="@+id/tv_date_header" />
+
+    <TextView
+        android:id="@+id/tv_header_welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/header_selamat_datang"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_header_username"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/tv_header_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:text="@string/tv_nama_pengguna"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_date_header"
+        app:layout_constraintStart_toStartOf="@+id/tv_header_welcome"
+        app:layout_constraintTop_toBottomOf="@+id/tv_header_welcome" />
+
+    <TextView
+        android:id="@+id/tv_date_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/dummy_date"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_note_header"
+        app:layout_constraintStart_toStartOf="@+id/tv_header_username"
+        app:layout_constraintTop_toBottomOf="@+id/tv_header_username" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="25dp"
+        android:contentDescription="@string/content_header"
+        android:src="@drawable/shakehand"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--    END HEADER SECTION-->
+
+    <!--    CONTENT SECTION -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/homepage_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_note_header">
+
+        <TextView
+            android:id="@+id/tv_menu_bansos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Bansos Menu"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="@id/constraintLayout"
+            app:layout_constraintStart_toStartOf="@id/constraintLayout"
+            app:layout_constraintTop_toTopOf="@id/constraintLayout" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/register_menu"
+            android:layout_width="130dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/rectangle_background"
+            android:orientation="vertical"
+            android:padding="@dimen/padding"
+            android:layout_marginStart="32dp"
+            app:layout_constraintStart_toStartOf="@id/constraintLayout"
+            app:layout_constraintTop_toBottomOf="@id/tv_menu_bansos">
+
+            <ImageView
+                android:id="@+id/icon_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/file"
+                app:layout_constraintEnd_toEndOf="@id/register_menu"
+                app:layout_constraintStart_toStartOf="@id/register_menu"
+                app:layout_constraintTop_toTopOf="@id/register_menu" />
+
+            <TextView
+                android:id="@+id/titile_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Daftar Bansos"
+                android:textSize="12sp"
+                android:layout_marginTop="@dimen/margin"
+                app:layout_constraintTop_toBottomOf="@id/icon_register"
+                app:layout_constraintEnd_toEndOf="@id/register_menu"
+                app:layout_constraintStart_toStartOf="@id/register_menu"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/scan_menu"
+            android:layout_width="130dp"
+            android:layout_height="140dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/rectangle_background"
+            android:orientation="vertical"
+            android:padding="@dimen/padding"
+            app:layout_constraintStart_toEndOf="@id/register_menu"
+            app:layout_constraintEnd_toEndOf="@id/constraintLayout"
+            app:layout_constraintTop_toBottomOf="@id/tv_menu_bansos">
+
+            <ImageView
+                android:id="@+id/icon_scan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/scan"
+                app:layout_constraintEnd_toEndOf="@id/scan_menu"
+                app:layout_constraintStart_toStartOf="@id/scan_menu"
+                app:layout_constraintTop_toTopOf="@id/scan_menu" />
+
+            <TextView
+                android:id="@+id/title_scan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Scan Bansos"
+                android:textSize="12sp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@id/icon_scan"
+                app:layout_constraintEnd_toEndOf="@id/scan_menu"
+                app:layout_constraintStart_toStartOf="@id/scan_menu"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--    END CONTENT SECTION-->
+</androidx.constraintlayout.widget.ConstraintLayout>
