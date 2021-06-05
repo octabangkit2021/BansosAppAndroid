@@ -9,8 +9,14 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import com.octatech.bansosapp.core.data.remote.network.ApiConfig
 import com.octatech.bansosapp.core.data.remote.response.ApiResponse
 import com.octatech.bansosapp.core.data.remote.response.BansosResponse
+import com.octatech.bansosapp.core.data.remote.response.OCRResponse
+import com.octatech.bansosapp.core.data.remote.response.OCRSendModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class RemoteDataSource() {
@@ -23,7 +29,7 @@ class RemoteDataSource() {
             for(document in it){
                 dataArray.add(BansosResponse(document.data.get("id_bansos") as String, document.data.get("nama_bansos") as String, document.data.get("deskripsi_bansos") as String, document.data.get("berlaku_bansos") as String, document.data.get("persyaratan") as String, document.data.get("gambar_bansos") as String, document.data.get("isi") as String ))
             }
-            Log.e("TRAP", "getAllTourism: " + dataArray )
+            Log.e("TRAP", "getAllBansos: " + dataArray )
             resultData.value = if (dataArray != null) ApiResponse.Success(dataArray) else ApiResponse.Empty
         }
         return resultData
@@ -41,5 +47,28 @@ class RemoteDataSource() {
         }.addOnFailureListener{
 
         }
+    }
+
+    fun getOCR(link : String) : LiveData<ApiResponse<OCRResponse>>{
+        val resultData = MutableLiveData<ApiResponse<OCRResponse>>()
+
+        val client = ApiConfig.provideApiService()
+        var model = OCRSendModel()
+        model.link = link
+        client.getOCR(model).enqueue(object : Callback<OCRResponse>{
+            override fun onResponse(call: Call<OCRResponse>, response: Response<OCRResponse>) {
+               if(response.isSuccessful){
+                    val data = response.body()
+                   resultData.value = if (data != null) ApiResponse.Success(data) else ApiResponse.Empty
+               }
+            }
+
+            override fun onFailure(call: Call<OCRResponse>, t: Throwable) {
+                resultData.value = ApiResponse.Error(t.message.toString())
+                Log.e("RemoteDataSource", "onFailure: " + t.message.toString(), )
+            }
+
+        })
+        return resultData
     }
 }

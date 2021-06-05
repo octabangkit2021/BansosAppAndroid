@@ -7,6 +7,7 @@ import androidx.lifecycle.Transformations
 import com.octatech.bansosapp.core.data.remote.RemoteDataSource
 import com.octatech.bansosapp.core.data.remote.response.ApiResponse
 import com.octatech.bansosapp.core.data.remote.response.BansosResponse
+import com.octatech.bansosapp.core.data.remote.response.OCRSendModel
 import com.octatech.bansosapp.core.data.source.LocalDataSource
 import com.octatech.bansosapp.core.domain.model.Bansos
 import com.octatech.bansosapp.core.domain.repository.IBansosRepository
@@ -56,4 +57,8 @@ class BansosRepository private constructor(
 
     override fun uploadGambar(fileName: String, uri: Uri) =
         appExecutors.diskIO().execute { remoteDataSource.uploadPhoto(fileName, uri) }
+
+    override fun getOCR(link: String): LiveData<Resource<OCRSendModel>> {
+        TODO("Not yet implemented")
+    }
 }

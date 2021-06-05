@@ -73,4 +73,10 @@ dependencies {
     implementation 'com.github.florent37:inline-activity-result-kotlin:1.0.4'
     implementation "com.github.illiashenkoo:startask-permissions:1.0.6"
     implementation 'com.github.jkwiecien:EasyImage:3.2.0'
+    implementation "com.airbnb.android:lottie:3.4.0"
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$logging_interceptor_version"
+
 }

@@ -59,7 +59,6 @@ class KtpRegisterFragment : Fragment() {
                 easyImage.openChooser(this)
             }
 
-
             easyImage = EasyImage.Builder(requireContext())
                 .setChooserType(ChooserType.CAMERA_AND_GALLERY)
                 .setCopyImagesToPublicGalleryFolder(false)
@@ -73,10 +72,27 @@ class KtpRegisterFragment : Fragment() {
 
 
             binding.btnNextRegisterKtp.setOnClickListener {
-                val fragment = KKRegisterFragment.newInstance(nomorKTP!!, pekerjaan.toString(), pendapatan.toString(), tanggungan.toString(), imageUrl.toString() )
-                fragmentManager?.beginTransaction()?.replace(R.id.fl_register, fragment)?.commit()
+                setLoading(true)
+//                val fragment = KKRegisterFragment.newInstance(nomorKTP!!, pekerjaan.toString(), pendapatan.toString(), tanggungan.toString(), imageUrl.toString() )
+//                fragmentManager?.beginTransaction()?.replace(R.id.fl_register, fragment)?.commit()
             }
         }
+    }
+
+    fun setLoading(load: Boolean){
+       if(load){
+           binding.loadingViewKtp.root.visibility = View.VISIBLE
+           binding.btnKtpRegister.visibility = View.GONE
+           binding.ivKtpRegister.visibility = View.GONE
+           binding.textView5.visibility = View.GONE
+           binding.progressKtp.visibility = View.GONE
+       } else {
+           binding.loadingViewKtp.root.visibility = View.GONE
+           binding.btnKtpRegister.visibility = View.VISIBLE
+           binding.ivKtpRegister.visibility = View.VISIBLE
+           binding.textView5.visibility = View.VISIBLE
+           binding.progressKtp.visibility = View.GONE
+       }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
