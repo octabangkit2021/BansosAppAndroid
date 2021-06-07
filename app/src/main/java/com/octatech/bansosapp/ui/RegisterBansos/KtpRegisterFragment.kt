@@ -13,10 +13,19 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.octatech.bansosapp.R
+import com.octatech.bansosapp.core.data.Resource
+import com.octatech.bansosapp.core.data.remote.network.ApiConfig
+import com.octatech.bansosapp.core.data.remote.response.ApiResponse
+import com.octatech.bansosapp.core.data.remote.response.OCRResponse
+import com.octatech.bansosapp.core.data.remote.response.OCRSendModel
 import com.octatech.bansosapp.core.ui.ViewModelFactory
 import com.octatech.bansosapp.databinding.FragmentKtpRegisterBinding
 import pl.aprilapps.easyphotopicker.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
+import kotlin.math.log
 
 private const val NOMOR_KTP = "nomorKTP"
 private const val PEKERJAAN = "pekerjaan"
@@ -72,9 +81,36 @@ class KtpRegisterFragment : Fragment() {
 
 
             binding.btnNextRegisterKtp.setOnClickListener {
-                setLoading(true)
-//                val fragment = KKRegisterFragment.newInstance(nomorKTP!!, pekerjaan.toString(), pendapatan.toString(), tanggungan.toString(), imageUrl.toString() )
-//                fragmentManager?.beginTransaction()?.replace(R.id.fl_register, fragment)?.commit()
+                val client = ApiConfig.provideApiService()
+                var model = OCRSendModel()
+                model.url = imageUrl.toString()
+                client.getOCR(model).enqueue(object : Callback<OCRResponse> {
+                    override fun onResponse(call: Call<OCRResponse>, response: Response<OCRResponse>) {
+                        if(response.isSuccessful){
+                            val data = response.body()
+                            Log.d("HASILOCR", "onResponse: " + data)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<OCRResponse>, t: Throwable) {
+                        Log.e("RemoteDataSource", "onFailure: " + t.message.toString(), )
+                    }
+
+                })
+//                registerViewModel.getOCR(imageUrl.toString()).observe(viewLifecycleOwner, {
+//                    if(it !== null){
+//                        when(it){
+//                            is Resource.Loading ->  setLoading(true)
+//                            is Resource.Success -> {
+//                                Toast.makeText(requireContext(), it.data?.result, Toast.LENGTH_LONG).show()
+//                                setLoading(false)
+//                                val fragment = KKRegisterFragment.newInstance(nomorKTP!!, pekerjaan.toString(), pendapatan.toString(), tanggungan.toString(), imageUrl.toString() )
+//                                fragmentManager?.beginTransaction()?.replace(R.id.fl_register, fragment)?.commit()
+//                            }
+//                            is Resource.Error -> print("ERROR GET DATA")
+//                        }
+//                    }
+//                })
             }
         }
     }

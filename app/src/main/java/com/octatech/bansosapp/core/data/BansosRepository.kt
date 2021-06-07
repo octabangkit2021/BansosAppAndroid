@@ -7,9 +7,11 @@ import androidx.lifecycle.Transformations
 import com.octatech.bansosapp.core.data.remote.RemoteDataSource
 import com.octatech.bansosapp.core.data.remote.response.ApiResponse
 import com.octatech.bansosapp.core.data.remote.response.BansosResponse
+import com.octatech.bansosapp.core.data.remote.response.OCRResponse
 import com.octatech.bansosapp.core.data.remote.response.OCRSendModel
 import com.octatech.bansosapp.core.data.source.LocalDataSource
 import com.octatech.bansosapp.core.domain.model.Bansos
+import com.octatech.bansosapp.core.domain.model.OCR
 import com.octatech.bansosapp.core.domain.repository.IBansosRepository
 import com.octatech.bansosapp.core.utils.AppExecutors
 import com.octatech.bansosapp.core.utils.DataMapper
@@ -58,7 +60,24 @@ class BansosRepository private constructor(
     override fun uploadGambar(fileName: String, uri: Uri) =
         appExecutors.diskIO().execute { remoteDataSource.uploadPhoto(fileName, uri) }
 
-    override fun getOCR(link: String): LiveData<Resource<OCRSendModel>> {
-        TODO("Not yet implemented")
-    }
+    override fun getOCR(link : String): LiveData<Resource<OCR>> =
+        object : NetworkBoundResource<OCR, OCRResponse>(appExecutors) {
+            override fun loadFromDB(): LiveData<OCR> {
+                return Transformations.map(localDataSource.getOcr()){
+                    DataMapper.mapEntitiesOcrToDomain(it)
+                }
+            }
+
+            override fun shouldFetch(data:OCR?): Boolean =
+                data == null
+
+            override fun createCall(): LiveData<ApiResponse<OCRResponse>> =
+                remoteDataSource.getOCR(link)
+
+            override fun saveCallResult(data: OCRResponse) {
+                Log.d("TRAPPING", "saveCallResult: " + data)
+                val ocr = DataMapper.mapResponsesOcrToEntities(data)
+                localDataSource.insertOCr(ocr)
+            }
+        }.asLiveData()
 }

@@ -5,8 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.octatech.bansosapp.core.data.source.entity.BansosEntity
+import com.octatech.bansosapp.core.data.source.entity.OCREntity
 
-@Database(entities = [BansosEntity::class], version = 1, exportSchema = false)
+@Database(entities = [BansosEntity::class, OCREntity::class], version = 1, exportSchema = false)
 abstract class BansosDatabase : RoomDatabase() {
 
     abstract fun bansosDao(): BansosDao
@@ -20,7 +21,7 @@ abstract class BansosDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     BansosDatabase::class.java,
-                    "Tourism.db"
+                    "Bansos.db"
                 )
                     .fallbackToDestructiveMigration()
                     .build()

@@ -54,7 +54,7 @@ class RemoteDataSource() {
 
         val client = ApiConfig.provideApiService()
         var model = OCRSendModel()
-        model.link = link
+        model.url = link
         client.getOCR(model).enqueue(object : Callback<OCRResponse>{
             override fun onResponse(call: Call<OCRResponse>, response: Response<OCRResponse>) {
                if(response.isSuccessful){

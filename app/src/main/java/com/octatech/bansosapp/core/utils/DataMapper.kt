@@ -1,8 +1,11 @@
 package com.octatech.bansosapp.core.utils
 
 import com.octatech.bansosapp.core.data.remote.response.BansosResponse
+import com.octatech.bansosapp.core.data.remote.response.OCRResponse
 import com.octatech.bansosapp.core.data.source.entity.BansosEntity
+import com.octatech.bansosapp.core.data.source.entity.OCREntity
 import com.octatech.bansosapp.core.domain.model.Bansos
+import com.octatech.bansosapp.core.domain.model.OCR
 
 object DataMapper {
     fun mapResponsesToEntities(input: List<BansosResponse>): List<BansosEntity> {
@@ -41,5 +44,22 @@ object DataMapper {
         bansosPersyaratan = bansos.bansosPersyaratan,
         bansosGambar = bansos.bansosGambar,
         bansosIsi = bansos.bansosIsi
+    )
+
+    fun mapResponsesOcrToEntities(input: OCRResponse): OCREntity {
+            val ocr = OCREntity(
+               raw = input.raw,
+                result = input.result
+            )
+        return ocr
+    }
+    fun mapEntitiesOcrToDomain(input: OCREntity): OCR =
+            OCR(
+              raw = input.raw,
+                result = input.result
+            )
+    fun mapDomainOcrToEntity(ocr: OCR) = OCREntity(
+        raw = ocr.raw,
+        result = ocr.result
     )
 }

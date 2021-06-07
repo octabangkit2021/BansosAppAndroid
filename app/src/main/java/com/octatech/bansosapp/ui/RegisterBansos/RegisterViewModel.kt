@@ -6,11 +6,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.octatech.bansosapp.core.domain.usecase.BansosUseCase
 
 class RegisterViewModel(private val bansosUseCase: BansosUseCase): ViewModel() {
-    var nomorKTP : String = "";
 
-    fun setKTP(nomorKTP : String){
-        this.nomorKTP = nomorKTP
-    }
-
-    fun getKTP() = nomorKTP
+    fun getOCR(link : String) = bansosUseCase.getOCR(link)
 }

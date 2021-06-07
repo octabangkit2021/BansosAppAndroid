@@ -33,3 +33,5 @@ data class BansosEntity(
     @ColumnInfo(name = "bansosIsi")
     var bansosIsi : String,
 ) : Parcelable
+
+

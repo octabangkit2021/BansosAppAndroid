@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 class OCRSendModel {
-    @SerializedName("link")
+    @SerializedName("url")
     @Expose
-    var link : String ? = null
+    var url : String ? = null
 }
