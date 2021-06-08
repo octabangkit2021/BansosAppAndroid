@@ -68,6 +68,7 @@ class KtpRegisterFragment : Fragment() {
                 easyImage.openChooser(this)
             }
 
+            binding.btnNextRegisterKtp.isEnabled = false
             easyImage = EasyImage.Builder(requireContext())
                 .setChooserType(ChooserType.CAMERA_AND_GALLERY)
                 .setCopyImagesToPublicGalleryFolder(false)
@@ -77,18 +78,24 @@ class KtpRegisterFragment : Fragment() {
 
             var factory = ViewModelFactory.getInstance(requireContext())
             registerViewModel = ViewModelProvider(this, factory)[RegisterViewModel::class.java]
-            Toast.makeText(requireActivity(), nomorKTP, Toast.LENGTH_LONG).show()
 
 
             binding.btnNextRegisterKtp.setOnClickListener {
                 val client = ApiConfig.provideApiService()
                 var model = OCRSendModel()
                 model.url = imageUrl.toString()
+                setLoading(true)
                 client.getOCR(model).enqueue(object : Callback<OCRResponse> {
                     override fun onResponse(call: Call<OCRResponse>, response: Response<OCRResponse>) {
                         if(response.isSuccessful){
+                            setLoading(false)
                             val data = response.body()
-                            Log.d("HASILOCR", "onResponse: " + data)
+                            if(nomorKTP != data?.result){
+                                Toast.makeText(requireContext(), "KTP Tidak Sesuai dengan form awal", Toast.LENGTH_LONG).show();
+                            } else {
+                                val fragment = KKRegisterFragment.newInstance(nomorKTP!!, pekerjaan.toString(), pendapatan.toString(), tanggungan.toString(), imageUrl.toString() )
+                                fragmentManager?.beginTransaction()?.replace(R.id.fl_register, fragment)?.commit()
+                            }
                         }
                     }
 
@@ -147,6 +154,7 @@ class KtpRegisterFragment : Fragment() {
                         storageReference.downloadUrl.addOnSuccessListener {
                             imageUrl = it
                             binding.ivKtpRegister.setImageURI(Uri.fromFile(imgFile))
+                            binding.btnNextRegisterKtp.isEnabled = true
                         }
                     }.addOnFailureListener{
                         Log.e("ERROR UPLOAD", "onMediaFilesPicked: " + it.message )

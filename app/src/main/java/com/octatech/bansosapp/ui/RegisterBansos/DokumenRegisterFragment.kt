@@ -1,24 +1,28 @@
 package com.octatech.bansosapp.ui.RegisterBansos
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidmads.library.qrgenearator.QRGContents
+import androidmads.library.qrgenearator.QRGEncoder
+import androidmads.library.qrgenearator.QRGSaver
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.octatech.bansosapp.R
 import com.octatech.bansosapp.core.ui.ViewModelFactory
 import com.octatech.bansosapp.databinding.FragmentDokumenRegisterBinding
-import com.octatech.bansosapp.databinding.FragmentKKRegisterBinding
 import com.octatech.bansosapp.ui.home.HomePage
 import pl.aprilapps.easyphotopicker.*
 import java.io.File
+
 
 private const val ARG_PARAM1 = "nomorKTP"
 private const val NOMOR_KTP = "nomorKTP"
@@ -27,6 +31,7 @@ private const val PENDAPATAN = "pendapatan"
 private const val TANGGUNGAN = "tanggungan"
 private const val IMAGEKTP = "imageKTP"
 private const val IMAGEKK = "imageKK"
+private val savePath = Environment.getExternalStorageState() + "/QRCode/"
 class DokumenRegisterFragment : Fragment() {
 
     private var _binding: FragmentDokumenRegisterBinding? = null
@@ -40,6 +45,8 @@ class DokumenRegisterFragment : Fragment() {
     private var imageKTP : String? = null;
     private var imageKK : String? = null;
     private var imageDokumen : String? = null;
+    private var bitmap: Bitmap? = null
+    private val qrgEncoder: QRGEncoder? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -93,8 +100,20 @@ class DokumenRegisterFragment : Fragment() {
                     .set(hasil)
                     .addOnSuccessListener { "Fetch Data berhasil" }
                     .addOnFailureListener { e -> "Fetch Data Gagal" }
+                val qrgEncoder =
+                    QRGEncoder(nomorKTP, null, QRGContents.Type.TEXT, 200)
+                bitmap = qrgEncoder.getBitmap();
+                val save = QRGSaver().save(
+                    savePath,
+                    nomorKTP,
+                    bitmap,
+                    QRGContents.ImageType.IMAGE_PNG
+                )
+                val result = if (save) "Image Saved" else "Image Not Saved"
+                Toast.makeText(activity, result, Toast.LENGTH_LONG).show();
                 var intent = Intent(requireContext(), HomePage::class.java)
                 startActivity(intent)
+
             }
 
         }
