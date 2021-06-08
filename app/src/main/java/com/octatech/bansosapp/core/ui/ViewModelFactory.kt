@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.octatech.bansosapp.core.di.Injection
 import com.octatech.bansosapp.core.domain.usecase.BansosUseCase
 import com.octatech.bansosapp.ui.RegisterBansos.RegisterViewModel
+import com.octatech.bansosapp.ui.admin.daftar.DaftarViewModel
 import com.octatech.bansosapp.ui.home.HomeViewModel
 
 class ViewModelFactory private constructor(private val bansosUsecase: BansosUseCase) :
@@ -35,6 +36,9 @@ class ViewModelFactory private constructor(private val bansosUsecase: BansosUseC
             }
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
                 RegisterViewModel(bansosUsecase) as T
+            }
+            modelClass.isAssignableFrom(DaftarViewModel::class.java) -> {
+                DaftarViewModel(bansosUsecase) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

@@ -32,6 +32,7 @@ private const val PEKERJAAN = "pekerjaan"
 private const val PENDAPATAN = "pendapatan"
 private const val TANGGUNGAN = "tanggungan"
 private const val KODE_BANSOS = "kodeBansos"
+private const val NOMOR_HP = "nomorHP"
 class KtpRegisterFragment : Fragment() {
 
     private var _binding: FragmentKtpRegisterBinding? = null
@@ -42,6 +43,7 @@ class KtpRegisterFragment : Fragment() {
     private var pekerjaan : String? = null;
     private var pendapatan : String? = null;
     private var tanggungan : String? = null;
+    private var nomorHP : String? = null;
     private var imageUrl : Uri? = null ;
     private var kodeBansos : String? = null ;
 
@@ -53,6 +55,7 @@ class KtpRegisterFragment : Fragment() {
             pendapatan = it.getString(PENDAPATAN)
             tanggungan = it.getString(TANGGUNGAN)
             kodeBansos = it.getString(KODE_BANSOS)
+            nomorHP = it.getString(NOMOR_HP)
         }
     }
 
@@ -88,6 +91,7 @@ class KtpRegisterFragment : Fragment() {
                 var model = OCRSendModel()
                 model.url = imageUrl.toString()
                 setLoading(true)
+                binding.btnNextRegisterKtp.isEnabled = false
                 client.getOCR(model).enqueue(object : Callback<OCRResponse> {
                     override fun onResponse(call: Call<OCRResponse>, response: Response<OCRResponse>) {
                         if(response.isSuccessful){
@@ -96,7 +100,7 @@ class KtpRegisterFragment : Fragment() {
                             if(nomorKTP != data?.result){
                                 Toast.makeText(requireContext(), "KTP Tidak Sesuai dengan form awal", Toast.LENGTH_LONG).show();
                             } else {
-                                val fragment = KKRegisterFragment.newInstance(nomorKTP!!, pekerjaan.toString(), pendapatan.toString(), tanggungan.toString(), imageUrl.toString(), kodeBansos!! )
+                                val fragment = KKRegisterFragment.newInstance(nomorKTP!!, pekerjaan.toString(), pendapatan.toString(), tanggungan.toString(), imageUrl.toString(), kodeBansos!! , nomorHP!!)
                                 fragmentManager?.beginTransaction()?.replace(R.id.fl_register, fragment)?.commit()
                             }
                         }
@@ -182,7 +186,7 @@ class KtpRegisterFragment : Fragment() {
     }
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String, param3: String, param4: String, param5 : String) =
+        fun newInstance(param1: String, param2: String, param3: String, param4: String, param5 : String, param6 : String) =
             KtpRegisterFragment().apply {
                 arguments = Bundle().apply {
                     putString(NOMOR_KTP, param1)
@@ -190,6 +194,7 @@ class KtpRegisterFragment : Fragment() {
                     putString(PENDAPATAN, param3)
                     putString(TANGGUNGAN, param4)
                     putString(KODE_BANSOS, param5)
+                    putString(NOMOR_HP, param6)
                 }
             }
     }

@@ -74,6 +74,23 @@
             app:layout_constraintTop_toBottomOf="@+id/register_et_idbansos" />
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/register_et_nohp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="@dimen/margin"
+            android:background="@drawable/input_text_with_border"
+            android:fontFamily="@font/poppins_medium"
+            android:hint="Nomor Handphone"
+            android:inputType="number"
+            android:padding="@dimen/padding_md"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/register_et_noktp" />
+
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/register_et_pekerjaan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -88,7 +105,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_et_noktp" />
+            app:layout_constraintTop_toBottomOf="@+id/register_et_nohp" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/register_et_pendapatan_perbulan"

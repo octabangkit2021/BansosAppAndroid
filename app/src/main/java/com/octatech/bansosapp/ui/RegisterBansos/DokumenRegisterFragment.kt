@@ -40,6 +40,7 @@ private const val PEKERJAAN = "pekerjaan"
 private const val PENDAPATAN = "pendapatan"
 private const val TANGGUNGAN = "tanggungan"
 private const val KODE_BANSOS = "kodeBansos"
+private const val NO_HP = "nomorHP"
 private const val IMAGEKTP = "imageKTP"
 private const val IMAGEKK = "imageKK"
 private val savePath = Environment.getExternalStorageState() + "/QRCode/"
@@ -58,6 +59,7 @@ class DokumenRegisterFragment : Fragment() {
     private var kodeBansos : String? = null;
     private var imageDokumen : String? = null;
     private var imageQRCODE : String? = null;
+    private var noHP : String? = null;
     private var bitmap: Bitmap? = null
     private var qrgEncoder: QRGEncoder? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,6 +72,7 @@ class DokumenRegisterFragment : Fragment() {
             imageKTP = it.getString(IMAGEKTP)
             imageKK = it.getString(IMAGEKK)
             kodeBansos = it.getString(KODE_BANSOS)
+            noHP = it.getString(NO_HP)
         }
     }
 
@@ -91,6 +94,7 @@ class DokumenRegisterFragment : Fragment() {
             var dataArray = ArrayList<String>();
             generateQRCode(nomorKTP)
             saveMediaToStorage(bitmap!!, nomorKTP!!);
+            var listPengajuan = ArrayList<String?>()
             easyImage = EasyImage.Builder(requireContext())
                 .setChooserType(ChooserType.CAMERA_AND_GALLERY)
                 .setCopyImagesToPublicGalleryFolder(false)
@@ -98,17 +102,22 @@ class DokumenRegisterFragment : Fragment() {
                 .allowMultiple(true)
                 .build()
 
-//            db.collection("history_pengajuan").document(nomorKTP!!).get().addOnSuccessListener {
-//                var dataArray = ArrayList<String>();
-//                dataArray.clear()
-//                dataArray.add(it.data?.get("history_pengajuan") as String);
-//                Log.e("TRAP", "getAllHistory: " + dataArray )
-//            }
+            db.collection("history_pengajuan").document(nomorKTP!!).get().addOnSuccessListener {
+                document ->
+                if(document != null){
+                    Log.d("HASIL HISTORY", "onViewCreated: " + document.getString("list_pengajuan"))
+                    if(document.getString("list_pengajuan") != null){
+                        listPengajuan.add(document.getString("list_pengajuan"))
+                    }
+                    Log.d("HASIL HISTORY", "onViewCreated: " + listPengajuan)
+                }
+            }
 
             var factory = ViewModelFactory.getInstance(requireContext())
             registerViewModel = ViewModelProvider(this, factory)[RegisterViewModel::class.java]
             Toast.makeText(requireActivity(), nomorKTP, Toast.LENGTH_LONG).show()
             binding.btnUploadRegister.setOnClickListener {
+                listPengajuan.add(kodeBansos)
                 var hasil = hashMapOf(
                     "nomor_KTP" to nomorKTP,
                     "pekerjaan" to pekerjaan,
@@ -117,7 +126,8 @@ class DokumenRegisterFragment : Fragment() {
                     "image_KTP" to imageKTP,
                     "image_KK" to imageKK,
                     "image_Dokumen" to imageDokumen,
-                    "kode_Bansos" to kodeBansos
+                    "kode_Bansos" to kodeBansos,
+                    "nomor_hp" to noHP,
                 )
 //                SET DAFTAR BANSOS
                 db.collection("daftar_bansos").document("$nomorKTP")
@@ -125,17 +135,9 @@ class DokumenRegisterFragment : Fragment() {
                     .addOnSuccessListener { "Simpan Data berhasil" }
                     .addOnFailureListener { e -> "Simpan Data Gagal" }
 
-                var hasilQR = hashMapOf(
-                    kodeBansos to imageQRCODE,
-                )
-//                SET HISTORY QR CODE
-                db.collection("history_pengajuan").document("$nomorKTP")
-                    .set(hasilQR)
-                    .addOnSuccessListener { "Fetch Data berhasil" }
-                    .addOnFailureListener { e -> "Fetch Data Gagal" }
-
                 var updateHistory = hashMapOf(
-                    "history_pengajuan" to dataArray.toString(),
+                    "history_pengajuan" to listPengajuan.toString(),
+                    kodeBansos to imageQRCODE,
                 )
 //                SET HISTORY LIST
                 db.collection("history_pengajuan").document("$nomorKTP")
@@ -285,7 +287,7 @@ class DokumenRegisterFragment : Fragment() {
     }
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String, param3: String, param4: String, param5 : String, param6: String, param7 : String) =
+        fun newInstance(param1: String, param2: String, param3: String, param4: String, param5 : String, param6: String, param7 : String, param8 : String) =
             DokumenRegisterFragment().apply {
                 arguments = Bundle().apply {
                     putString(NOMOR_KTP, param1)
@@ -295,6 +297,7 @@ class DokumenRegisterFragment : Fragment() {
                     putString(IMAGEKTP, param5)
                     putString(IMAGEKK, param6)
                     putString(KODE_BANSOS, param7)
+                    putString(NO_HP, param8)
                 }
             }
     }

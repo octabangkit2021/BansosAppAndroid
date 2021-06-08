@@ -24,6 +24,7 @@ private const val NOMOR_KTP = "nomorKTP"
 private const val PEKERJAAN = "pekerjaan"
 private const val PENDAPATAN = "pendapatan"
 private const val TANGGUNGAN = "tanggungan"
+private const val NO_HP = "noHP"
 private const val IMAGEKTP = "imageKTP"
 private const val KODE_BANSOS = "kodeBansos"
 class KKRegisterFragment : Fragment() {
@@ -38,6 +39,7 @@ class KKRegisterFragment : Fragment() {
     private var tanggungan : String? = null;
     private var imageKTP : String? = null;
     private var kodeBansos : String? = null;
+    private var noHP : String? = null;
     private var imageUrl : Uri? = null ;
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +51,7 @@ class KKRegisterFragment : Fragment() {
             tanggungan = it.getString(TANGGUNGAN)
             imageKTP = it.getString(IMAGEKTP)
             kodeBansos = it.getString(KODE_BANSOS)
+            noHP = it.getString(NO_HP)
         }
     }
 
@@ -79,10 +82,9 @@ class KKRegisterFragment : Fragment() {
             registerViewModel = ViewModelProvider(this, factory)[RegisterViewModel::class.java]
             Toast.makeText(requireActivity(), nomorKTP, Toast.LENGTH_LONG).show()
             binding.btnNextRegisterKk.setOnClickListener {
-                val fragment = DokumenRegisterFragment.newInstance(nomorKTP!!, pekerjaan!!, pendapatan!!, tanggungan!!, imageKTP!!, imageUrl.toString(), kodeBansos!!)
+                val fragment = DokumenRegisterFragment.newInstance(nomorKTP!!, pekerjaan!!, pendapatan!!, tanggungan!!, imageKTP!!, imageUrl.toString(), kodeBansos!!, noHP!!)
                 fragmentManager?.beginTransaction()?.replace(R.id.fl_register, fragment)?.commit()
             }
-
         }
     }
 
@@ -126,7 +128,7 @@ class KKRegisterFragment : Fragment() {
     }
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String, param3: String, param4: String, param5 : String , param6 : String) =
+        fun newInstance(param1: String, param2: String, param3: String, param4: String, param5 : String , param6 : String, param7 : String) =
             KKRegisterFragment().apply {
                 arguments = Bundle().apply {
                     putString(NOMOR_KTP, param1)
@@ -135,6 +137,7 @@ class KKRegisterFragment : Fragment() {
                     putString(TANGGUNGAN, param4)
                     putString(IMAGEKTP, param5)
                     putString(KODE_BANSOS, param6)
+                    putString(NO_HP, param7)
                 }
             }
     }

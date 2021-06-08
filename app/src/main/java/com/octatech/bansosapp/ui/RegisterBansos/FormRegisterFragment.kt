@@ -47,7 +47,7 @@ class FormRegisterFragment : Fragment() {
                 if(binding.registerEtNoktp.text.isNullOrBlank() || binding.registerEtPekerjaan.text.isNullOrBlank() || binding.registerEtPendapatanPerbulan.text.isNullOrBlank() || binding.registerEtTanggungan.text.isNullOrBlank()){
                     Toast.makeText(requireContext(), "Tidak Boleh Ada Yang Kosong", Toast.LENGTH_LONG).show()
                 }else {
-                    var fragment = KtpRegisterFragment.newInstance(binding.registerEtNoktp.text.toString(), binding.registerEtPekerjaan.text.toString(),binding.registerEtPendapatanPerbulan.text.toString(),binding.registerEtTanggungan.text.toString(), idBansos!! )
+                    var fragment = KtpRegisterFragment.newInstance(binding.registerEtNoktp.text.toString(), binding.registerEtPekerjaan.text.toString(),binding.registerEtPendapatanPerbulan.text.toString(),binding.registerEtTanggungan.text.toString(), idBansos!!, binding.registerEtNohp.text.toString() )
                     fragmentManager?.beginTransaction()?.replace(R.id.fl_register, fragment)?.commit()
                 }
             }
