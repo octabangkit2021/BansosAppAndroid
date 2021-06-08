@@ -10,7 +10,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.zxing.integration.android.IntentIntegrator
 import com.journeyapps.barcodescanner.CaptureActivity
+import com.octatech.bansosapp.R
 import com.octatech.bansosapp.databinding.FragmentHomeAdminBinding
+import com.octatech.bansosapp.ui.admin.daftar.AdminDaftarBansosFragment
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -30,12 +32,14 @@ class HomeAdminFragment : Fragment(), EasyPermissions.RationaleCallbacks, EasyPe
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.scanMenu.setOnClickListener{
-            CameraTask()
-        }
+        if(view != null){
+            binding.scanMenu.setOnClickListener{
+                CameraTask()
+            }
 
-        binding.registerMenu.setOnClickListener {
-            fragmentManager.beginTransaction().replace()
+            binding.registerMenu.setOnClickListener {
+                fragmentManager?.beginTransaction()?.replace(R.id.fl_home_admin, AdminDaftarBansosFragment())?.commit()
+            }
         }
     }
 

@@ -14,6 +14,7 @@ import com.octatech.bansosapp.core.ui.HomeBansosAdapter
 import com.octatech.bansosapp.core.ui.ViewModelFactory
 import com.octatech.bansosapp.databinding.FragmentAdminDaftarBansosBinding
 import com.octatech.bansosapp.databinding.FragmentHomeBinding
+import com.octatech.bansosapp.databinding.FragmentKtpRegisterBinding
 import com.octatech.bansosapp.ui.detail.DetailActivity
 
 class AdminDaftarBansosFragment : Fragment() {
@@ -25,7 +26,8 @@ class AdminDaftarBansosFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_daftar_bansos, container, false)
+        _binding = FragmentAdminDaftarBansosBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
