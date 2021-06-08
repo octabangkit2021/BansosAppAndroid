@@ -80,4 +80,5 @@ class BansosRepository private constructor(
                 localDataSource.insertOCr(ocr)
             }
         }.asLiveData()
+
 }

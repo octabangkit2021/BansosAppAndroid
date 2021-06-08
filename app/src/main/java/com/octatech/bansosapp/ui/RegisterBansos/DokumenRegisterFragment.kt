@@ -1,27 +1,37 @@
 package com.octatech.bansosapp.ui.RegisterBansos
 
+import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Point
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
 import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
-import androidmads.library.qrgenearator.QRGSaver
+import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.FirebaseStorage
+import com.octatech.bansosapp.core.data.remote.response.ApiResponse
 import com.octatech.bansosapp.core.ui.ViewModelFactory
 import com.octatech.bansosapp.databinding.FragmentDokumenRegisterBinding
 import com.octatech.bansosapp.ui.home.HomePage
 import pl.aprilapps.easyphotopicker.*
 import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
 
 
 private const val ARG_PARAM1 = "nomorKTP"
@@ -29,6 +39,7 @@ private const val NOMOR_KTP = "nomorKTP"
 private const val PEKERJAAN = "pekerjaan"
 private const val PENDAPATAN = "pendapatan"
 private const val TANGGUNGAN = "tanggungan"
+private const val KODE_BANSOS = "kodeBansos"
 private const val IMAGEKTP = "imageKTP"
 private const val IMAGEKK = "imageKK"
 private val savePath = Environment.getExternalStorageState() + "/QRCode/"
@@ -44,9 +55,11 @@ class DokumenRegisterFragment : Fragment() {
     private var tanggungan : String? = null;
     private var imageKTP : String? = null;
     private var imageKK : String? = null;
+    private var kodeBansos : String? = null;
     private var imageDokumen : String? = null;
+    private var imageQRCODE : String? = null;
     private var bitmap: Bitmap? = null
-    private val qrgEncoder: QRGEncoder? = null
+    private var qrgEncoder: QRGEncoder? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -56,6 +69,7 @@ class DokumenRegisterFragment : Fragment() {
             tanggungan = it.getString(TANGGUNGAN)
             imageKTP = it.getString(IMAGEKTP)
             imageKK = it.getString(IMAGEKK)
+            kodeBansos = it.getString(KODE_BANSOS)
         }
     }
 
@@ -73,8 +87,10 @@ class DokumenRegisterFragment : Fragment() {
             binding.btnDocumenRegister.setOnClickListener {
                 easyImage.openChooser(this)
             }
-
-
+            var db = FirebaseFirestore.getInstance()
+            var dataArray = ArrayList<String>();
+            generateQRCode(nomorKTP)
+            saveMediaToStorage(bitmap!!, nomorKTP!!);
             easyImage = EasyImage.Builder(requireContext())
                 .setChooserType(ChooserType.CAMERA_AND_GALLERY)
                 .setCopyImagesToPublicGalleryFolder(false)
@@ -82,40 +98,150 @@ class DokumenRegisterFragment : Fragment() {
                 .allowMultiple(true)
                 .build()
 
+//            db.collection("history_pengajuan").document(nomorKTP!!).get().addOnSuccessListener {
+//                var dataArray = ArrayList<String>();
+//                dataArray.clear()
+//                dataArray.add(it.data?.get("history_pengajuan") as String);
+//                Log.e("TRAP", "getAllHistory: " + dataArray )
+//            }
+
             var factory = ViewModelFactory.getInstance(requireContext())
             registerViewModel = ViewModelProvider(this, factory)[RegisterViewModel::class.java]
             Toast.makeText(requireActivity(), nomorKTP, Toast.LENGTH_LONG).show()
             binding.btnUploadRegister.setOnClickListener {
                 var hasil = hashMapOf(
-                    "nomorKTP" to nomorKTP,
+                    "nomor_KTP" to nomorKTP,
                     "pekerjaan" to pekerjaan,
                     "pendapatan" to pendapatan,
                     "tunjangan" to tanggungan,
-                    "imagektp" to imageKTP,
-                    "imageKK" to imageKK,
-                    "imageDokumen" to imageDokumen
+                    "image_KTP" to imageKTP,
+                    "image_KK" to imageKK,
+                    "image_Dokumen" to imageDokumen,
+                    "kode_Bansos" to kodeBansos
                 )
-                var db = FirebaseFirestore.getInstance()
+//                SET DAFTAR BANSOS
                 db.collection("daftar_bansos").document("$nomorKTP")
                     .set(hasil)
+                    .addOnSuccessListener { "Simpan Data berhasil" }
+                    .addOnFailureListener { e -> "Simpan Data Gagal" }
+
+                var hasilQR = hashMapOf(
+                    kodeBansos to imageQRCODE,
+                )
+//                SET HISTORY QR CODE
+                db.collection("history_pengajuan").document("$nomorKTP")
+                    .set(hasilQR)
                     .addOnSuccessListener { "Fetch Data berhasil" }
                     .addOnFailureListener { e -> "Fetch Data Gagal" }
-                val qrgEncoder =
-                    QRGEncoder(nomorKTP, null, QRGContents.Type.TEXT, 200)
-                bitmap = qrgEncoder.getBitmap();
-                val save = QRGSaver().save(
-                    savePath,
-                    nomorKTP,
-                    bitmap,
-                    QRGContents.ImageType.IMAGE_PNG
+
+                var updateHistory = hashMapOf(
+                    "history_pengajuan" to dataArray.toString(),
                 )
-                val result = if (save) "Image Saved" else "Image Not Saved"
-                Toast.makeText(activity, result, Toast.LENGTH_LONG).show();
+//                SET HISTORY LIST
+                db.collection("history_pengajuan").document("$nomorKTP")
+                    .set(updateHistory)
+                    .addOnSuccessListener { "Fetch Data berhasil" }
+                    .addOnFailureListener { e -> "Fetch Data Gagal" }
+
                 var intent = Intent(requireContext(), HomePage::class.java)
                 startActivity(intent)
 
             }
 
+        }
+    }
+
+    fun generateQRCode(ktp : String?){
+        val manager = getActivity()?.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val display = manager.defaultDisplay
+        val point = Point();
+        display.getSize(point)
+        val width = point.x
+        val height = point.y
+        var dimen = if (width < height) width else height
+
+        dimen = dimen * 3/4
+
+        qrgEncoder = QRGEncoder(ktp, null, QRGContents.Type.TEXT, dimen);
+
+        try {
+            bitmap = qrgEncoder!!.bitmap
+            binding.ivBarcode.setImageBitmap(bitmap)
+        } catch (e: Exception){
+            Log.e("QR", "generateQRCode: " + e.message );
+        }
+    }
+
+    fun saveMediaToStorage(bitmap: Bitmap, nomorKTP : String) {
+        //Generating a file name
+        val filename = "${nomorKTP}.PNG"
+
+        //Output stream
+        var fos: OutputStream? = null
+
+        //For devices running android >= Q
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            //getting the contentResolver
+            context?.contentResolver?.also { resolver ->
+
+                //Content resolver will process the contentvalues
+                val contentValues = ContentValues().apply {
+
+                    //putting file information in content values
+                    put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
+                    put(MediaStore.MediaColumns.MIME_TYPE, "image/PNG")
+                    put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+                }
+
+                //Inserting the contentValues to contentResolver and getting the Uri
+                val imageUri: Uri? =
+                    resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                //Opening an outputstream with the Uri that we got
+                fos = imageUri?.let { resolver.openOutputStream(it) }
+                var storageReference = FirebaseStorage.getInstance().getReference(nomorKTP +"_QRCODE")
+                storageReference.putFile(imageUri!!).addOnSuccessListener {
+                    storageReference.downloadUrl.addOnSuccessListener {
+                        imageQRCODE = it.toString()
+                    }
+                }.addOnFailureListener{
+                    Log.e("ERROR UPLOAD", "onMediaFilesPicked: " + it.message )
+                }.addOnProgressListener {
+                    binding.progressDokumen.visibility = View.VISIBLE
+                    binding.btnDocumenRegister.visibility = View.GONE
+                }.addOnCompleteListener{
+                    binding.progressDokumen.visibility = View.GONE
+                    binding.btnDocumenRegister.visibility = View.VISIBLE
+                }
+            }
+        } else {
+            //These for devices running on android < Q
+            //So I don't think an explanation is needed here
+            val imagesDir =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+            val image = File(imagesDir, filename)
+            fos = FileOutputStream(image)
+            var uri = Uri.fromFile(image)
+            var storageReference = FirebaseStorage.getInstance().getReference(nomorKTP +"_QRCODE")
+            storageReference.putFile(uri).addOnSuccessListener {
+                storageReference.downloadUrl.addOnSuccessListener {
+                    imageQRCODE = it.toString()
+                }
+            }.addOnFailureListener{
+                Log.e("ERROR UPLOAD", "onMediaFilesPicked: " + it.message )
+            }.addOnProgressListener {
+                binding.progressDokumen.visibility = View.VISIBLE
+                binding.btnDocumenRegister.visibility = View.GONE
+            }.addOnCompleteListener{
+                binding.progressDokumen.visibility = View.GONE
+                binding.btnDocumenRegister.visibility = View.VISIBLE
+            }
+
+        }
+
+        fos?.use {
+            //Finally writing the bitmap to the output stream that we opened
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
+            Toast.makeText(requireActivity(), "BARCODE SUDAH DISIMPAN DI GALERY", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -130,7 +256,7 @@ class DokumenRegisterFragment : Fragment() {
                 override fun onMediaFilesPicked(imageFiles: Array<MediaFile>, source: MediaSource) {
                     val imgFile = File(imageFiles.get(0).file.toString())
                     var uri = Uri.fromFile(imgFile)
-                    var storageReference = FirebaseStorage.getInstance().getReference(nomorKTP +"DP")
+                    var storageReference = FirebaseStorage.getInstance().getReference(nomorKTP +"_DP")
                     storageReference.putFile(uri).addOnSuccessListener {
                         storageReference.downloadUrl.addOnSuccessListener {
                             imageDokumen = it.toString()
@@ -159,7 +285,7 @@ class DokumenRegisterFragment : Fragment() {
     }
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String, param3: String, param4: String, param5 : String, param6: String) =
+        fun newInstance(param1: String, param2: String, param3: String, param4: String, param5 : String, param6: String, param7 : String) =
             DokumenRegisterFragment().apply {
                 arguments = Bundle().apply {
                     putString(NOMOR_KTP, param1)
@@ -168,6 +294,7 @@ class DokumenRegisterFragment : Fragment() {
                     putString(TANGGUNGAN, param4)
                     putString(IMAGEKTP, param5)
                     putString(IMAGEKK, param6)
+                    putString(KODE_BANSOS, param7)
                 }
             }
     }

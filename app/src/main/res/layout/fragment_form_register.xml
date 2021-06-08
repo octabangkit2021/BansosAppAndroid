@@ -39,6 +39,24 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/register_et_idbansos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="@dimen/margin"
+            android:background="@drawable/input_text_with_border"
+            android:fontFamily="@font/poppins_medium"
+            android:hint="ID Bansos"
+            android:enabled="false"
+            android:inputType="number"
+            android:padding="@dimen/padding_md"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/register_et_noktp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,7 +71,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            app:layout_constraintTop_toBottomOf="@+id/register_et_idbansos" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/register_et_pekerjaan"

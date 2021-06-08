@@ -31,6 +31,7 @@ private const val NOMOR_KTP = "nomorKTP"
 private const val PEKERJAAN = "pekerjaan"
 private const val PENDAPATAN = "pendapatan"
 private const val TANGGUNGAN = "tanggungan"
+private const val KODE_BANSOS = "kodeBansos"
 class KtpRegisterFragment : Fragment() {
 
     private var _binding: FragmentKtpRegisterBinding? = null
@@ -42,6 +43,7 @@ class KtpRegisterFragment : Fragment() {
     private var pendapatan : String? = null;
     private var tanggungan : String? = null;
     private var imageUrl : Uri? = null ;
+    private var kodeBansos : String? = null ;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +52,7 @@ class KtpRegisterFragment : Fragment() {
             pekerjaan = it.getString(PEKERJAAN)
             pendapatan = it.getString(PENDAPATAN)
             tanggungan = it.getString(TANGGUNGAN)
+            kodeBansos = it.getString(KODE_BANSOS)
         }
     }
 
@@ -93,7 +96,7 @@ class KtpRegisterFragment : Fragment() {
                             if(nomorKTP != data?.result){
                                 Toast.makeText(requireContext(), "KTP Tidak Sesuai dengan form awal", Toast.LENGTH_LONG).show();
                             } else {
-                                val fragment = KKRegisterFragment.newInstance(nomorKTP!!, pekerjaan.toString(), pendapatan.toString(), tanggungan.toString(), imageUrl.toString() )
+                                val fragment = KKRegisterFragment.newInstance(nomorKTP!!, pekerjaan.toString(), pendapatan.toString(), tanggungan.toString(), imageUrl.toString(), kodeBansos!! )
                                 fragmentManager?.beginTransaction()?.replace(R.id.fl_register, fragment)?.commit()
                             }
                         }
@@ -149,7 +152,7 @@ class KtpRegisterFragment : Fragment() {
                 override fun onMediaFilesPicked(imageFiles: Array<MediaFile>, source: MediaSource) {
                     val imgFile = File(imageFiles.get(0).file.toString())
                     var uri = Uri.fromFile(imgFile)
-                    var storageReference = FirebaseStorage.getInstance().getReference(nomorKTP+"KTP_")
+                    var storageReference = FirebaseStorage.getInstance().getReference(nomorKTP+"_KTP")
                     storageReference.putFile(uri).addOnSuccessListener {
                         storageReference.downloadUrl.addOnSuccessListener {
                             imageUrl = it
@@ -179,13 +182,14 @@ class KtpRegisterFragment : Fragment() {
     }
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String, param3: String, param4: String) =
+        fun newInstance(param1: String, param2: String, param3: String, param4: String, param5 : String) =
             KtpRegisterFragment().apply {
                 arguments = Bundle().apply {
                     putString(NOMOR_KTP, param1)
                     putString(PEKERJAAN, param2)
                     putString(PENDAPATAN, param3)
                     putString(TANGGUNGAN, param4)
+                    putString(KODE_BANSOS, param5)
                 }
             }
     }

@@ -12,12 +12,21 @@ import com.octatech.bansosapp.R
 import com.octatech.bansosapp.core.ui.ViewModelFactory
 import com.octatech.bansosapp.databinding.FragmentFormRegisterBinding
 
+private const val KODE_BANSOS = "idBansos"
 class FormRegisterFragment : Fragment() {
 
     private var _binding: FragmentFormRegisterBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var registerViewModel: RegisterViewModel;
+    private var idBansos : String? = null;
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            idBansos = it.getString(KODE_BANSOS)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +39,7 @@ class FormRegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if(activity != null){
+            binding.registerEtIdbansos.setText(idBansos)
             val facroty = ViewModelFactory.getInstance(requireContext())
             registerViewModel = ViewModelProvider(requireActivity(), facroty)[RegisterViewModel::class.java]
 
@@ -37,10 +47,19 @@ class FormRegisterFragment : Fragment() {
                 if(binding.registerEtNoktp.text.isNullOrBlank() || binding.registerEtPekerjaan.text.isNullOrBlank() || binding.registerEtPendapatanPerbulan.text.isNullOrBlank() || binding.registerEtTanggungan.text.isNullOrBlank()){
                     Toast.makeText(requireContext(), "Tidak Boleh Ada Yang Kosong", Toast.LENGTH_LONG).show()
                 }else {
-                    var fragment = KtpRegisterFragment.newInstance(binding.registerEtNoktp.text.toString(), binding.registerEtPekerjaan.text.toString(),binding.registerEtPendapatanPerbulan.text.toString(),binding.registerEtTanggungan.text.toString() )
+                    var fragment = KtpRegisterFragment.newInstance(binding.registerEtNoktp.text.toString(), binding.registerEtPekerjaan.text.toString(),binding.registerEtPendapatanPerbulan.text.toString(),binding.registerEtTanggungan.text.toString(), idBansos!! )
                     fragmentManager?.beginTransaction()?.replace(R.id.fl_register, fragment)?.commit()
                 }
             }
         }
+    }
+    companion object {
+        @JvmStatic
+        fun newInstance(param1: String) =
+            FormRegisterFragment().apply {
+                arguments = Bundle().apply {
+                    putString(KODE_BANSOS, param1)
+                }
+            }
     }
 }

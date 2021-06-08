@@ -19,12 +19,13 @@ import com.octatech.bansosapp.databinding.FragmentKtpRegisterBinding
 import pl.aprilapps.easyphotopicker.*
 import java.io.File
 
-private const val ARG_PARAM1 = "nomorKTP"
+
 private const val NOMOR_KTP = "nomorKTP"
 private const val PEKERJAAN = "pekerjaan"
 private const val PENDAPATAN = "pendapatan"
 private const val TANGGUNGAN = "tanggungan"
 private const val IMAGEKTP = "imageKTP"
+private const val KODE_BANSOS = "kodeBansos"
 class KKRegisterFragment : Fragment() {
 
     private var _binding: FragmentKKRegisterBinding? = null
@@ -36,6 +37,7 @@ class KKRegisterFragment : Fragment() {
     private var pendapatan : String? = null;
     private var tanggungan : String? = null;
     private var imageKTP : String? = null;
+    private var kodeBansos : String? = null;
     private var imageUrl : Uri? = null ;
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +48,7 @@ class KKRegisterFragment : Fragment() {
             pendapatan = it.getString(PENDAPATAN)
             tanggungan = it.getString(TANGGUNGAN)
             imageKTP = it.getString(IMAGEKTP)
+            kodeBansos = it.getString(KODE_BANSOS)
         }
     }
 
@@ -76,7 +79,7 @@ class KKRegisterFragment : Fragment() {
             registerViewModel = ViewModelProvider(this, factory)[RegisterViewModel::class.java]
             Toast.makeText(requireActivity(), nomorKTP, Toast.LENGTH_LONG).show()
             binding.btnNextRegisterKk.setOnClickListener {
-                val fragment = DokumenRegisterFragment.newInstance(nomorKTP!!, pekerjaan!!, pendapatan!!, tanggungan!!, imageKTP!!, imageUrl.toString())
+                val fragment = DokumenRegisterFragment.newInstance(nomorKTP!!, pekerjaan!!, pendapatan!!, tanggungan!!, imageKTP!!, imageUrl.toString(), kodeBansos!!)
                 fragmentManager?.beginTransaction()?.replace(R.id.fl_register, fragment)?.commit()
             }
 
@@ -94,7 +97,7 @@ class KKRegisterFragment : Fragment() {
                 override fun onMediaFilesPicked(imageFiles: Array<MediaFile>, source: MediaSource) {
                     val imgFile = File(imageFiles.get(0).file.toString())
                     var uri = Uri.fromFile(imgFile)
-                    var storageReference = FirebaseStorage.getInstance().getReference(nomorKTP+"KK")
+                    var storageReference = FirebaseStorage.getInstance().getReference(nomorKTP+"_KK")
                     storageReference.putFile(uri).addOnSuccessListener {
                         storageReference.downloadUrl.addOnSuccessListener {
                             imageUrl = it
@@ -123,7 +126,7 @@ class KKRegisterFragment : Fragment() {
     }
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String, param3: String, param4: String, param5 : String) =
+        fun newInstance(param1: String, param2: String, param3: String, param4: String, param5 : String , param6 : String) =
             KKRegisterFragment().apply {
                 arguments = Bundle().apply {
                     putString(NOMOR_KTP, param1)
@@ -131,6 +134,7 @@ class KKRegisterFragment : Fragment() {
                     putString(PENDAPATAN, param3)
                     putString(TANGGUNGAN, param4)
                     putString(IMAGEKTP, param5)
+                    putString(KODE_BANSOS, param6)
                 }
             }
     }

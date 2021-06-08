@@ -31,7 +31,8 @@ class RegisterBansosActivity : AppCompatActivity() {
         Glide.with(this).load(data?.bansosGambar).into(binding.imgBanner)
 
         if(savedInstanceState == null){
-            supportFragmentManager.beginTransaction().replace(R.id.fl_register, FormRegisterFragment()).commit()
+            var fragment = FormRegisterFragment.newInstance(data!!.bansosId)
+            supportFragmentManager.beginTransaction().replace(R.id.fl_register, fragment).commit()
         }
 
     }

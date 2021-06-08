@@ -35,6 +35,18 @@ class RemoteDataSource() {
         return resultData
     }
 
+    fun getHistoryPengajuan(noKTP : String): LiveData<ApiResponse<List<String>>> {
+        val resultData = MutableLiveData<ApiResponse<List<String>>>()
+        db.collection("history_pengajuan").document(noKTP).get().addOnSuccessListener {
+            var dataArray = ArrayList<String>();
+            dataArray.clear()
+            dataArray.add(it.data?.get("history_pengajuan") as String);
+            Log.e("TRAP", "getAllHistory: " + dataArray )
+            resultData.value = if (dataArray != null) ApiResponse.Success(dataArray) else ApiResponse.Empty
+        }
+        return resultData
+    }
+
     fun uploadPhoto(fileName : String, file : Uri ){
         var storageReference = FirebaseStorage.getInstance().getReference("$fileName")
         var result : Uri

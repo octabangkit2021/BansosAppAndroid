@@ -9,5 +9,4 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     @POST("ocr")
     fun getOCR(@Body body : OCRSendModel): Call<OCRResponse>
-
 }
