@@ -3,15 +3,18 @@ package com.octatech.bansosapp.ui.admin
 import android.R.attr
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.zxing.integration.android.IntentIntegrator
 import com.journeyapps.barcodescanner.CaptureActivity
 import com.octatech.bansosapp.R
 import com.octatech.bansosapp.databinding.FragmentHomeAdminBinding
+import com.octatech.bansosapp.ui.RegisterBansos.KtpRegisterFragment
 import com.octatech.bansosapp.ui.admin.daftar.AdminDaftarBansosFragment
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
@@ -72,7 +75,15 @@ class HomeAdminFragment : Fragment(), EasyPermissions.RationaleCallbacks, EasyPe
             if (result.contents == null) {
                 Toast.makeText(requireContext(), "Cancelled", Toast.LENGTH_LONG).show()
             } else {
-                Toast.makeText(requireContext(), "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
+                var db = FirebaseFirestore.getInstance()
+                db.collection("history_pengajuan").document(result.contents).get().addOnSuccessListener {
+                        document ->
+                    if(document != null){
+                        db.collection("history_pengajuan").document(result.contents).delete()
+                    } else {
+                        Toast.makeText(requireContext(), "QR Tidak Terdeteksi", Toast.LENGTH_LONG).show()
+                    }
+                }
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data)

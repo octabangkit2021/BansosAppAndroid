@@ -102,16 +102,7 @@ class DokumenRegisterFragment : Fragment() {
                 .allowMultiple(true)
                 .build()
 
-            db.collection("history_pengajuan").document(nomorKTP!!).get().addOnSuccessListener {
-                document ->
-                if(document != null){
-                    Log.d("HASIL HISTORY", "onViewCreated: " + document.getString("list_pengajuan"))
-                    if(document.getString("list_pengajuan") != null){
-                        listPengajuan.add(document.getString("list_pengajuan"))
-                    }
-                    Log.d("HASIL HISTORY", "onViewCreated: " + listPengajuan)
-                }
-            }
+
 
             var factory = ViewModelFactory.getInstance(requireContext())
             registerViewModel = ViewModelProvider(this, factory)[RegisterViewModel::class.java]
@@ -136,8 +127,9 @@ class DokumenRegisterFragment : Fragment() {
                     .addOnFailureListener { e -> "Simpan Data Gagal" }
 
                 var updateHistory = hashMapOf(
-                    "history_pengajuan" to listPengajuan.toString(),
+                    "pengajuan_active" to kodeBansos,
                     kodeBansos to imageQRCODE,
+                    "status" to "pengajuan"
                 )
 //                SET HISTORY LIST
                 db.collection("history_pengajuan").document("$nomorKTP")
@@ -145,9 +137,13 @@ class DokumenRegisterFragment : Fragment() {
                     .addOnSuccessListener { "Fetch Data berhasil" }
                     .addOnFailureListener { e -> "Fetch Data Gagal" }
 
-                var intent = Intent(requireContext(), HomePage::class.java)
-                startActivity(intent)
-
+                binding.viewSuccess.root.visibility = View.VISIBLE
+                binding.scrollDokumen.visibility = View.GONE
+                binding.btnUploadRegister.visibility = View.GONE
+                binding.viewSuccess.btnConfirmSuccess.setOnClickListener {
+                    var intent = Intent(requireContext(), HomePage::class.java)
+                    startActivity(intent)
+                }
             }
 
         }

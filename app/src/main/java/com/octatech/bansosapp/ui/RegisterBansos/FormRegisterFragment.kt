@@ -1,6 +1,7 @@
 package com.octatech.bansosapp.ui.RegisterBansos
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,8 +48,24 @@ class FormRegisterFragment : Fragment() {
                 if(binding.registerEtNoktp.text.isNullOrBlank() || binding.registerEtPekerjaan.text.isNullOrBlank() || binding.registerEtPendapatanPerbulan.text.isNullOrBlank() || binding.registerEtTanggungan.text.isNullOrBlank()){
                     Toast.makeText(requireContext(), "Tidak Boleh Ada Yang Kosong", Toast.LENGTH_LONG).show()
                 }else {
-                    var fragment = KtpRegisterFragment.newInstance(binding.registerEtNoktp.text.toString(), binding.registerEtPekerjaan.text.toString(),binding.registerEtPendapatanPerbulan.text.toString(),binding.registerEtTanggungan.text.toString(), idBansos!!, binding.registerEtNohp.text.toString() )
-                    fragmentManager?.beginTransaction()?.replace(R.id.fl_register, fragment)?.commit()
+                    var db = FirebaseFirestore.getInstance()
+                    db.collection("history_pengajuan").document(binding.registerEtNoktp.text.toString()).get().addOnSuccessListener {
+                            document ->
+                        if(document != null){
+                            Log.d("HASIL HISTORY", "onViewCreated: " + document.getString("list_pengajuan"))
+                            if(document.getString("pengajuan_active") != null){
+                                Toast.makeText(requireContext(), "PENGAJUAN BANSOS LAIN SEDANG AKTIF, ANDA HARUS MENUNGGU PENGAJUAL SELESAI", Toast.LENGTH_LONG).show()
+                            } else {
+                                var fragment = KtpRegisterFragment.newInstance(binding.registerEtNoktp.text.toString(), binding.registerEtPekerjaan.text.toString(),binding.registerEtPendapatanPerbulan.text.toString(),binding.registerEtTanggungan.text.toString(), idBansos!!, binding.registerEtNohp.text.toString() )
+                                fragmentManager?.beginTransaction()?.replace(R.id.fl_register, fragment)?.commit()
+                            }
+                        } else {
+                            var fragment = KtpRegisterFragment.newInstance(binding.registerEtNoktp.text.toString(), binding.registerEtPekerjaan.text.toString(),binding.registerEtPendapatanPerbulan.text.toString(),binding.registerEtTanggungan.text.toString(), idBansos!!, binding.registerEtNohp.text.toString() )
+                            fragmentManager?.beginTransaction()?.replace(R.id.fl_register, fragment)?.commit()
+                        }
+                    }
+
+
                 }
             }
         }

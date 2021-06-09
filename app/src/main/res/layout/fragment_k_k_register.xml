@@ -32,7 +32,7 @@
         android:layout_width="270dp"
         android:layout_height="180dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/sample"
+        android:src="@drawable/kk_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
