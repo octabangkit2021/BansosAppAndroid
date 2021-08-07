@@ -12,6 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.octatech.bansosapp.R
 import com.octatech.bansosapp.core.ui.ViewModelFactory
 import com.octatech.bansosapp.databinding.FragmentFormRegisterBinding
+import id.ionbit.ionalert.IonAlert
 
 private const val KODE_BANSOS = "idBansos"
 class FormRegisterFragment : Fragment() {
@@ -54,7 +55,7 @@ class FormRegisterFragment : Fragment() {
                         if(document != null){
                             Log.d("HASIL HISTORY", "onViewCreated: " + document.getString("list_pengajuan"))
                             if(document.getString("pengajuan_active") != null){
-                                Toast.makeText(requireContext(), "PENGAJUAN BANSOS LAIN SEDANG AKTIF, ANDA HARUS MENUNGGU PENGAJUAL SELESAI", Toast.LENGTH_LONG).show()
+                                IonAlert(requireContext(), IonAlert.WARNING_TYPE).setTitleText("PERHATIAN").setContentText("Pengajuan Dengan nomor KTP yang sama sudah dilakukan, mohon tunggu pengajuan sebelumnya").show()
                             } else {
                                 var fragment = KtpRegisterFragment.newInstance(binding.registerEtNoktp.text.toString(), binding.registerEtPekerjaan.text.toString(),binding.registerEtPendapatanPerbulan.text.toString(),binding.registerEtTanggungan.text.toString(), idBansos!!, binding.registerEtNohp.text.toString() )
                                 fragmentManager?.beginTransaction()?.replace(R.id.fl_register, fragment)?.commit()

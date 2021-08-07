@@ -23,9 +23,8 @@ class HomeAdmin : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = ActivityHomeAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         if (savedInstanceState == null){
-            supportFragmentManager.beginTransaction().replace(R.id.fl_home_admin, HomeAdminFragment()).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.fl_home_admin, HomeAdminFragment()).commit()
         }
 
         binding.bottomBar.setOnTabSelectListener(object :AnimatedBottomBar.OnTabSelectListener{

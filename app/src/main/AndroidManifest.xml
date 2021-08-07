@@ -15,21 +15,32 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BansosApp"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.home.HomePage"></activity>
+        <activity
+            android:name=".ui.qr_code_show.showQRCodeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.registerUser.RegisterActivity"
+            android:exported="true" />
+        <activity android:name=".ui.home.HomePage" />
         <activity android:name=".ui.admin.HomeAdmin" />
         <activity android:name=".ui.RegisterBansos.RegisterBansosActivity" />
         <activity android:name=".ui.detail.DetailActivity" />
-        <activity android:name=".ui.login.LoginActivity">
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".ui.SplashScreenPage"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.SplashScreenPage" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
+
 </manifest>

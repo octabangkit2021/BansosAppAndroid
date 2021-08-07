@@ -17,7 +17,7 @@ object ApiConfig {
 
     fun provideApiService(): ApiService {
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://4329a6ac2be0.ngrok.io/")
+            .baseUrl("http://35.206.195.250/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(provideOkHttpClient())
             .build()

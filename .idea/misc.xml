@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/drawable/button_forgot_pass_background.xml" value="0.2351851851851852" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/activity_detail.xml" value="0.5" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/activity_home_admin.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/activity_home_page.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/activity_login.xml" value="0.33" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/activity_register.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/activity_register_bansos.xml" value="0.24375" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/activity_show_qrcode.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/activity_splash_screen.xml" value="0.25" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/fragment_admin_daftar_bansos.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/fragment_dokumen_register.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/fragment_form_register.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/fragment_home.xml" value="0.33" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/fragment_home_admin.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/fragment_k_k_register.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/fragment_ktp_register.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/fragment_login.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/fragment_news.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/fragment_profile.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/fragment_signup.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/item_list_bansos.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/view_error.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/view_loading.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/view_maintenance.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/layout/view_success.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Octavian/StudioProjects/BansosAppAndroid/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2598958333333333" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

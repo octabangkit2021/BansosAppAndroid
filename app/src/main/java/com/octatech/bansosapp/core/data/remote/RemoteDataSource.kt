@@ -10,10 +10,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import com.octatech.bansosapp.core.data.remote.network.ApiConfig
-import com.octatech.bansosapp.core.data.remote.response.ApiResponse
-import com.octatech.bansosapp.core.data.remote.response.BansosResponse
-import com.octatech.bansosapp.core.data.remote.response.OCRResponse
-import com.octatech.bansosapp.core.data.remote.response.OCRSendModel
+import com.octatech.bansosapp.core.data.remote.response.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,13 +32,17 @@ class RemoteDataSource() {
         return resultData
     }
 
-    fun getHistoryPengajuan(noKTP : String): LiveData<ApiResponse<List<String>>> {
-        val resultData = MutableLiveData<ApiResponse<List<String>>>()
-        db.collection("history_pengajuan").document(noKTP).get().addOnSuccessListener {
-            var dataArray = ArrayList<String>();
+    fun getBansosTerdaftar(nomor_ktp: String): LiveData<ApiResponse<List<BansosTerdaftarResponse>>> {
+        val resultData = MutableLiveData<ApiResponse<List<BansosTerdaftarResponse>>>()
+        db.collection("history_pengajuan").document(nomor_ktp).get().addOnSuccessListener {
+            var dataArray = ArrayList<BansosTerdaftarResponse>();
             dataArray.clear()
-            dataArray.add(it.data?.get("history_pengajuan") as String);
-            Log.e("TRAP", "getAllHistory: " + dataArray )
+            if(it.getString("pengajuan_active").isNullOrEmpty()){
+                dataArray.add(BansosTerdaftarResponse("", "", "Tidak Ada Pengajuan"))
+            } else {
+                dataArray.add(BansosTerdaftarResponse(it.getString("pengajuan_active") as String, it.getString("qr_code") as String, it.getString("status") as String))
+            }
+            Log.e("TRAP", "getAllBansos: " + dataArray )
             resultData.value = if (dataArray != null) ApiResponse.Success(dataArray) else ApiResponse.Empty
         }
         return resultData

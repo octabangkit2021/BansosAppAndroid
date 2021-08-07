@@ -5,12 +5,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.octatech.bansosapp.core.data.remote.RemoteDataSource
-import com.octatech.bansosapp.core.data.remote.response.ApiResponse
-import com.octatech.bansosapp.core.data.remote.response.BansosResponse
-import com.octatech.bansosapp.core.data.remote.response.OCRResponse
-import com.octatech.bansosapp.core.data.remote.response.OCRSendModel
+import com.octatech.bansosapp.core.data.remote.response.*
 import com.octatech.bansosapp.core.data.source.LocalDataSource
 import com.octatech.bansosapp.core.domain.model.Bansos
+import com.octatech.bansosapp.core.domain.model.BansosTerdaftar
 import com.octatech.bansosapp.core.domain.model.OCR
 import com.octatech.bansosapp.core.domain.repository.IBansosRepository
 import com.octatech.bansosapp.core.utils.AppExecutors
@@ -80,5 +78,26 @@ class BansosRepository private constructor(
                 localDataSource.insertOCr(ocr)
             }
         }.asLiveData()
+
+    override fun getBansosTerdaftar(nomor_ktp: String): LiveData<Resource<List<BansosTerdaftar>>> =
+        object : NetworkBoundResource<List<BansosTerdaftar>, List<BansosTerdaftarResponse>>(appExecutors) {
+            override fun loadFromDB(): LiveData<List<BansosTerdaftar>> {
+                return Transformations.map(localDataSource.getBansosTerdaftar()){
+                    DataMapper.mapEntitiesToDomainTerdaftar(it)
+                }
+            }
+            override fun shouldFetch(data: List<BansosTerdaftar>?): Boolean =
+                true
+
+            override fun createCall(): LiveData<ApiResponse<List<BansosTerdaftarResponse>>> =
+                remoteDataSource.getBansosTerdaftar(nomor_ktp)
+
+            override fun saveCallResult(data: List<BansosTerdaftarResponse>) {
+                Log.d("TRAPPING", "saveCallResult: " + data)
+                val bansosList = DataMapper.mapResponsesToEntitiesTerdaftar(data)
+                localDataSource.insertbansosTerdaftar(bansosList)
+            }
+        }.asLiveData()
+
 
 }

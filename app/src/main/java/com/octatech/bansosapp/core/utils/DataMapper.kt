@@ -1,10 +1,13 @@
 package com.octatech.bansosapp.core.utils
 
 import com.octatech.bansosapp.core.data.remote.response.BansosResponse
+import com.octatech.bansosapp.core.data.remote.response.BansosTerdaftarResponse
 import com.octatech.bansosapp.core.data.remote.response.OCRResponse
 import com.octatech.bansosapp.core.data.source.entity.BansosEntity
+import com.octatech.bansosapp.core.data.source.entity.BansosTerdaftarEntity
 import com.octatech.bansosapp.core.data.source.entity.OCREntity
 import com.octatech.bansosapp.core.domain.model.Bansos
+import com.octatech.bansosapp.core.domain.model.BansosTerdaftar
 import com.octatech.bansosapp.core.domain.model.OCR
 
 object DataMapper {
@@ -34,6 +37,27 @@ object DataMapper {
                 bansosPersyaratan = it.bansosPersyaratan,
                 bansosGambar = it.bansosGambar,
                 bansosIsi = it.bansosIsi
+            )
+        }
+
+    fun mapResponsesToEntitiesTerdaftar(input: List<BansosTerdaftarResponse>): List<BansosTerdaftarEntity> {
+        val bansosList = ArrayList<BansosTerdaftarEntity>()
+        input.map {
+            val bansos = BansosTerdaftarEntity(
+               pengajuan_active = it.pengajuan_active,
+                qr_code = it.qr_code,
+                status = it.status
+            )
+            bansosList.add(bansos)
+        }
+        return bansosList
+    }
+    fun mapEntitiesToDomainTerdaftar(input: List<BansosTerdaftarEntity>): List<BansosTerdaftar> =
+        input.map {
+            BansosTerdaftar(
+               pengajuan_active = it.pengajuan_active,
+                qr_code = it.qr_code,
+                status = it.status
             )
         }
     fun mapDomainToEntity(bansos: Bansos) = BansosEntity(

@@ -21,6 +21,7 @@ import androidmads.library.qrgenearator.QRGEncoder
 import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.FirebaseStorage
@@ -28,10 +29,15 @@ import com.octatech.bansosapp.core.data.remote.response.ApiResponse
 import com.octatech.bansosapp.core.ui.ViewModelFactory
 import com.octatech.bansosapp.databinding.FragmentDokumenRegisterBinding
 import com.octatech.bansosapp.ui.home.HomePage
+import id.ionbit.ionalert.IonAlert
+import io.easyprefs.Prefs
 import pl.aprilapps.easyphotopicker.*
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 private const val ARG_PARAM1 = "nomorKTP"
@@ -107,6 +113,10 @@ class DokumenRegisterFragment : Fragment() {
             var factory = ViewModelFactory.getInstance(requireContext())
             registerViewModel = ViewModelProvider(this, factory)[RegisterViewModel::class.java]
             Toast.makeText(requireActivity(), nomorKTP, Toast.LENGTH_LONG).show()
+            var user = Prefs.read().content("NAMA", "")
+            val c: Calendar = Calendar.getInstance()
+            val df = SimpleDateFormat("dd-MM-yyyy")
+            val formattedDate: String = df.format(c.time)
             binding.btnUploadRegister.setOnClickListener {
                 listPengajuan.add(kodeBansos)
                 var hasil = hashMapOf(
@@ -119,6 +129,11 @@ class DokumenRegisterFragment : Fragment() {
                     "image_Dokumen" to imageDokumen,
                     "kode_Bansos" to kodeBansos,
                     "nomor_hp" to noHP,
+                    "created_by" to user,
+                    "created_date" to FieldValue.serverTimestamp(),
+                    "taken" to "belum diambil",
+                    "taken_date" to "belum diambil",
+                    "taken_by" to "belum diambil"
                 )
 //                SET DAFTAR BANSOS
                 db.collection("daftar_bansos").document("$nomorKTP")
@@ -128,8 +143,13 @@ class DokumenRegisterFragment : Fragment() {
 
                 var updateHistory = hashMapOf(
                     "pengajuan_active" to kodeBansos,
-                    kodeBansos to imageQRCODE,
-                    "status" to "pengajuan"
+                    "qr_code" to imageQRCODE,
+                    "status" to "Sedang Diajukan",
+                    "created_by" to user,
+                    "created_date" to FieldValue.serverTimestamp(),
+                    "taken" to "belum diambil",
+                    "taken_date" to "belum diambil",
+                    "taken_by" to "belum diambil"
                 )
 //                SET HISTORY LIST
                 db.collection("history_pengajuan").document("$nomorKTP")
@@ -202,7 +222,7 @@ class DokumenRegisterFragment : Fragment() {
                         imageQRCODE = it.toString()
                     }
                 }.addOnFailureListener{
-                    Log.e("ERROR UPLOAD", "onMediaFilesPicked: " + it.message )
+                    IonAlert(requireContext(), IonAlert.ERROR_TYPE).setTitleText("Gagal").setContentText("Gambar Gagal Diproses, Mohon Ulangi pilih gambar..").setConfirmText("Ulangi").show()
                 }.addOnProgressListener {
                     binding.progressDokumen.visibility = View.VISIBLE
                     binding.btnDocumenRegister.visibility = View.GONE
@@ -225,7 +245,7 @@ class DokumenRegisterFragment : Fragment() {
                     imageQRCODE = it.toString()
                 }
             }.addOnFailureListener{
-                Log.e("ERROR UPLOAD", "onMediaFilesPicked: " + it.message )
+                IonAlert(requireContext(), IonAlert.ERROR_TYPE).setTitleText("Gagal").setContentText("Gambar Gagal Diproses, Mohon Ulangi pilih gambar..").setConfirmText("Ulangi").show()
             }.addOnProgressListener {
                 binding.progressDokumen.visibility = View.VISIBLE
                 binding.btnDocumenRegister.visibility = View.GONE
@@ -239,7 +259,7 @@ class DokumenRegisterFragment : Fragment() {
         fos?.use {
             //Finally writing the bitmap to the output stream that we opened
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
-            Toast.makeText(requireActivity(), "BARCODE SUDAH DISIMPAN DI GALERY", Toast.LENGTH_LONG).show()
+            IonAlert(requireContext(), IonAlert.SUCCESS_TYPE).setTitleText("BERHASIL").setContentText("QR Code Sudah Tersimpan Di Galery, Mohon Simpan QR Code Dengan Baik").setConfirmText("Lanjut").show()
         }
     }
 

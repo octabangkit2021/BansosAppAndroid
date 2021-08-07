@@ -20,6 +20,7 @@ import com.octatech.bansosapp.core.data.remote.response.OCRResponse
 import com.octatech.bansosapp.core.data.remote.response.OCRSendModel
 import com.octatech.bansosapp.core.ui.ViewModelFactory
 import com.octatech.bansosapp.databinding.FragmentKtpRegisterBinding
+import id.ionbit.ionalert.IonAlert
 import pl.aprilapps.easyphotopicker.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -98,7 +99,11 @@ class KtpRegisterFragment : Fragment() {
                             setLoading(false)
                             val data = response.body()
                             if(nomorKTP != data?.result){
-                                Toast.makeText(requireContext(), "KTP Tidak Sesuai dengan form awal", Toast.LENGTH_LONG).show();
+                                setLoading(false)
+                                IonAlert(requireContext(), IonAlert.ERROR_TYPE)
+                                    .setTitleText("Gagal")
+                                    .setContentText("Pendaftaran gagal, Mohon periksa koneksi anda")
+                                    .show()
                             } else {
                                 val fragment = KKRegisterFragment.newInstance(nomorKTP!!, pekerjaan.toString(), pendapatan.toString(), tanggungan.toString(), imageUrl.toString(), kodeBansos!! , nomorHP!!)
                                 fragmentManager?.beginTransaction()?.replace(R.id.fl_register, fragment)?.commit()
@@ -111,20 +116,6 @@ class KtpRegisterFragment : Fragment() {
                     }
 
                 })
-//                registerViewModel.getOCR(imageUrl.toString()).observe(viewLifecycleOwner, {
-//                    if(it !== null){
-//                        when(it){
-//                            is Resource.Loading ->  setLoading(true)
-//                            is Resource.Success -> {
-//                                Toast.makeText(requireContext(), it.data?.result, Toast.LENGTH_LONG).show()
-//                                setLoading(false)
-//                                val fragment = KKRegisterFragment.newInstance(nomorKTP!!, pekerjaan.toString(), pendapatan.toString(), tanggungan.toString(), imageUrl.toString() )
-//                                fragmentManager?.beginTransaction()?.replace(R.id.fl_register, fragment)?.commit()
-//                            }
-//                            is Resource.Error -> print("ERROR GET DATA")
-//                        }
-//                    }
-//                })
             }
         }
     }

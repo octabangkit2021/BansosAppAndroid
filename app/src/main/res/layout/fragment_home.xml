@@ -90,18 +90,34 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins_semibold"
             android:text="@string/title_list_bansos"
-            android:textSize="22sp"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/rv_list_bansos"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tv_title_list_bansos2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Riwayat Pengajuan"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/card_riwayat"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_list_bansos" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_list_bansos"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="310dp"
+            android:layout_height="230dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="25dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tv_title_list_bansos2"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/tv_title_list_bansos"
             app:layout_constraintTop_toBottomOf="@+id/tv_title_list_bansos"
             tools:listitem="@layout/item_list_bansos" />
@@ -124,6 +140,58 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_riwayat"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/rv_list_bansos"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/rv_list_bansos"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_list_bansos2">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/img_qr_terdaftar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.529"
+                    app:srcCompat="@drawable/file" />
+
+                <TextView
+                    android:id="@+id/tv_status_terdaftar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Sedang Diajukan"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@+id/btn_lihat_qr_terdaftar"
+                    app:layout_constraintStart_toEndOf="@+id/img_qr_terdaftar"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <Button
+                    android:id="@+id/btn_lihat_qr_terdaftar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Lihat QR Code"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tv_status_terdaftar"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_status_terdaftar" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

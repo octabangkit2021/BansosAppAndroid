@@ -11,6 +11,8 @@ import com.octatech.bansosapp.databinding.ActivityHomePageBinding
 import com.octatech.bansosapp.ui.news.NewsFragment
 import com.octatech.bansosapp.ui.profile.ProfileFragment
 import nl.joery.animatedbottombar.AnimatedBottomBar
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class HomePage : AppCompatActivity() {
@@ -40,7 +42,7 @@ class HomePage : AppCompatActivity() {
         setContentView(binding.root)
 
         if(savedInstanceState == null){
-            supportFragmentManager.beginTransaction().replace(R.id.fl_home, HomeFragment()).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.fl_home, HomeFragment()).commit()
         }
 
         binding.bottomBar.setOnTabSelectListener(object : AnimatedBottomBar.OnTabSelectListener {
